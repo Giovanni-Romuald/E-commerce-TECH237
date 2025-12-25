@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechZone - Inscription</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* ========== VARIABLES THÈME SOMBRE (DÉFAUT) ========== */
+        :root {
+            --black: #000000;
+            --dark: #0b0b0b;
+            --yellow: #ffb703;
+            --yellow-dark: #e6a503;
+            --white: #ffffff;
+            --gray: #bdbdbd;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --card-bg: #1a1a1a;
+            --electric-yellow: #ffcc00;
+            --success-green: #00cc00;
+            --error-red: #ff3333;
+        }
+
+        /* ========== VARIABLES THÈME CLAIR ========== */
+        body.light-mode {
+            --black: #ffffff;
+            --dark: #f5f5f5;
+            --white: #000000;
+            --gray: #666666;
+            --light-gray: #0b0b0b;
+            --card-bg: #ffffff;
+            --electric-yellow: #ff9900;
+        }
+
+        /* ========== RESET & BASE ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* ========== BOUTON THÈME ========== */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--yellow);
+            color: var(--black);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg) scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 183, 3, 0.4);
+        }
+
+        .theme-toggle i.fa-sun {
+            display: none;
+        }
+
+        body.light-mode .theme-toggle i.fa-moon {
+            display: none;
+        }
+
+        body.light-mode .theme-toggle i.fa-sun {
+            display: block;
+        }
+
+        body.light-mode .theme-toggle {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            background: var(--dark);
+            overflow: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        /* ========== LEFT PANEL (CAROUSEL) ========== */
+        .left-panel {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .carousel,
+        .carousel-images {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+            transform: scale(1.1);
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,.85), transparent);
+        }
+
+        .carousel-overlay h1 {
+            color: var(--yellow);
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 183, 3, 0.5);
+        }
+
+        .carousel-overlay p {
+            color: var(--gray);
+            font-size: 14px;
+            transition: color 0.5s ease;
+        }
+
+        .carousel-overlay .product-tag {
+            display: inline-block;
+            background: rgba(255, 183, 3, 0.2);
+            color: var(--yellow);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 5px;
+            border: 1px solid rgba(255, 183, 3, 0.3);
+        }
+
+        /* Carousel Controls */
+        .carousel-controls {
+            position: absolute;
+            bottom: 120px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 5;
+        }
+
+        .carousel-controls button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.3);
+            background: rgba(255,255,255,.2);
+            color: #fff;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .carousel-controls button:hover {
+            background: var(--yellow);
+            color: #000;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .carousel-dot {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-dot.active {
+            background: var(--yellow);
+            transform: scale(1.2);
+            box-shadow: 0 0 10px var(--yellow);
+        }
+
+        /* ========== RIGHT PANEL (FORM) ========== */
+        .right-panel {
+            width: 50%;
+            height: 100%;
+            padding: 30px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--dark);
+            position: relative;
+            overflow-y: auto;
+            transition: background-color 0.5s ease;
+        }
+
+        .right-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--yellow), var(--electric-yellow));
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: var(--yellow);
+            margin-right: 8px;
+            text-shadow: 0 0 8px rgba(255, 183, 3, 0.5);
+        }
+
+        .logo span {
+            background: linear-gradient(to right, var(--yellow), var(--electric-yellow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Headers */
+        h2 {
+            font-size: 26px;
+            margin-bottom: 5px;
+            color: var(--white);
+            transition: color 0.5s ease;
+        }
+
+        .welcome-text {
+            color: var(--yellow);
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: color 0.5s ease;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        label {
+            font-size: 12px;
+            color: var(--gray);
+            display: block;
+            margin-bottom: 5px;
+            transition: color 0.5s ease;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        body.light-mode input {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            color: var(--black);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--yellow);
+            box-shadow: 0 0 0 2px rgba(255, 183, 3, 0.2);
+        }
+
+        /* Password visibility toggle */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .toggle-password:hover {
+            color: var(--yellow);
+        }
+
+        /* Form grid for name fields */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            height: 4px;
+            background: rgba(255,255,255,.1);
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        /* Terms and conditions */
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 15px 0;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .terms input[type="checkbox"] {
+            width: auto;
+            margin-top: 2px;
+            accent-color: var(--yellow);
+        }
+
+        .terms a {
+            color: var(--yellow);
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 25px;
+            background: linear-gradient(to right, var(--yellow), var(--electric-yellow));
+            color: #000;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 183, 3, 0.3);
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .google-btn {
+            padding: 14px;
+            border-radius: 25px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,.2);
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all .3s;
+        }
+
+        body.light-mode .google-btn {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            color: var(--black);
+        }
+
+        .google-btn:hover {
+            background: rgba(255,255,255,.05);
+            border-color: var(--yellow);
+        }
+
+        body.light-mode .google-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Divider & Links */
+        .divider {
+            text-align: center;
+            color: var(--gray);
+            margin: 15px 0;
+            font-size: 13px;
+            position: relative;
+            transition: color 0.5s ease;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: rgba(255,255,255,.1);
+        }
+
+        body.light-mode .divider::before,
+        body.light-mode .divider::after {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--gray);
+            transition: color 0.5s ease;
+        }
+
+        .login-link a {
+            color: var(--yellow);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color .3s;
+            position: relative;
+        }
+
+        .login-link a:hover {
+            color: var(--electric-yellow);
+        }
+
+        .login-link a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--electric-yellow);
+            transition: width 0.3s;
+        }
+
+        .login-link a:hover::after {
+            width: 100%;
+        }
+
+        /* Error messages */
+        .error-message {
+            color: var(--error-red);
+            font-size: 11px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Success message */
+        .success-message {
+            color: var(--success-green);
+            font-size: 12px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1100px) {
+            .right-panel {
+                padding: 25px 40px;
+            }
+
+            .logo {
+                font-size: 20px;
+                margin-bottom: 12px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .welcome-text {
+                font-size: 18px;
+            }
+
+            .form-row {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                width: 100%;
+                height: 30vh;
+            }
+
+            .right-panel {
+                width: 100%;
+                height: 70vh;
+                padding: 25px 35px;
+                overflow-y: auto;
+            }
+
+            .carousel-overlay h1 {
+                font-size: 24px;
+            }
+
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .right-panel {
+                padding: 20px;
+                justify-content: flex-start;
+                padding-top: 50px;
+            }
+
+            .logo {
+                font-size: 20px;
+                text-align: center;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+
+            h2 {
+                font-size: 22px;
+                text-align: center;
+            }
+
+            .welcome-text {
+                text-align: center;
+            }
+
+            .subtitle {
+                text-align: center;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Bouton de changement de thème -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+    </button>
+
+    <div class="container">
+        <!-- LEFT PANEL - CAROUSEL -->
+        <div class="left-panel">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <!-- Images adaptées pour l'électronique -->
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" class="carousel-image active">
+                    <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" class="carousel-image">
+                    <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" class="carousel-image">
+                    <img src="https://images.unsplash.com/photo-1600003263720-95b45a4035d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" class="carousel-image">
+                </div>
+
+                <div class="carousel-overlay">
+                    <h1>Rejoignez TechZone</h1>
+                    <p>Créez votre compte pour profiter de tous nos services.</p>
+                    <div class="product-tag">Inscription Gratuite</div>
+                </div>
+
+                <div class="carousel-controls">
+                    <button id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                    <button id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                <div class="carousel-dots">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                    <div class="carousel-dot" data-index="2"></div>
+                    <div class="carousel-dot" data-index="3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL - SIGNUP FORM -->
+        <div class="right-panel">
+            <div class="logo">
+                <i class="fa-solid fa-microchip"></i><span>TechZone</span>
+            </div>
+
+            <h2>Créer un compte</h2>
+            <div class="welcome-text">Rejoignez notre communauté</div>
+            <p class="subtitle">Inscrivez-vous pour bénéficier d'offres exclusives et suivre vos commandes</p>
+
+            <form id="signupForm">
+                <!-- Name fields in a row -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom *</label>
+                        <input type="text" id="nom" placeholder="Votre nom" required>
+                        <div class="error-message" id="nom-error">Le nom est requis</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Prénom *</label>
+                        <input type="text" id="prenom" placeholder="Votre prénom" required>
+                        <div class="error-message" id="prenom-error">Le prénom est requis</div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+        <!-- Email et Numéro de téléphone sur la même ligne -->
+<div class="form-row">
+    <div class="form-group">
+        <label>Adresse Email *</label>
+        <input type="email" id="email" placeholder="exemple@email.com" required>
+        <div class="error-message" id="email-error">Veuillez entrer une adresse email valide</div>
+    </div>
+    
+    <div class="form-group">
+        <label>Numéro de téléphone *</label>
+        <input type="tel" id="numero" placeholder="06 12 34 56 78" required>
+        <div class="error-message" id="numero-error">Veuillez entrer un numéro valide</div>
+    </div>
+</div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label>Mot de passe *</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password" data-target="password">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="password-strength-bar"></div>
+                    </div>
+                    <div class="error-message" id="password-error">Le mot de passe doit contenir au moins 8 caractères</div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label>Confirmer le mot de passe *</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirm-password" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password" data-target="confirm-password">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="confirm-password-error">Les mots de passe ne correspondent pas</div>
+                </div>
+
+                <!-- Terms and conditions -->
+                <div class="terms">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">
+                        J'accepte les <a href="#">conditions d'utilisation</a> et la 
+                        <a href="#">politique de confidentialité</a> *
+                    </label>
+                </div>
+                <div class="error-message" id="terms-error">Vous devez accepter les conditions</div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn">
+                    <i class="fas fa-user-plus"></i> S'INSCRIRE
+                </button>
+
+                <!-- Success message -->
+                <div class="success-message" id="success-message">
+                    Inscription réussie ! Redirection en cours...
+                </div>
+
+              
+
+            
+
+                <!-- Login link -->
+                <p class="login-link">
+                    Vous avez déjà un compte ? <a href="#">Se connecter</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ========== GESTION DU THÈME ==========
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Vérifier le thème sauvegardé dans localStorage
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+        }
+
+        // Fonction pour basculer le thème
+        function toggleTheme() {
+            body.classList.toggle('light-mode');
+
+            // Sauvegarder la préférence
+            const isLightMode = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+
+            // Notification
+            showNotification(isLightMode ? 'Mode clair activé' : 'Mode sombre activé');
+        }
+
+        // Événement du bouton thème
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // ========== CAROUSEL FUNCTIONALITY ==========
+        const images = document.querySelectorAll('.carousel-image');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let index = 0;
+
+        function show(i) {
+            images.forEach(img => img.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            images[i].classList.add('active');
+            dots[i].classList.add('active');
+            index = i;
+        }
+
+        // Button Events
+        document.getElementById('nextBtn').onclick = () => show((index + 1) % images.length);
+        document.getElementById('prevBtn').onclick = () => show((index - 1 + images.length) % images.length);
+
+        // Dot Events
+        dots.forEach(dot => {
+            dot.onclick = () => show(parseInt(dot.dataset.index));
+        });
+
+        // Auto-slide
+        setInterval(() => show((index + 1) % images.length), 5000);
+
+        // ========== FORM VALIDATION ==========
+        const form = document.getElementById('signupForm');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const passwordStrengthBar = document.getElementById('password-strength-bar');
+
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Password strength indicator
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            
+            // Length check
+            if (password.length >= 8) strength += 25;
+            if (password.length >= 12) strength += 25;
+            
+            // Complexity checks
+            if (/[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password)) strength += 25;
+            
+            // Update strength bar
+            passwordStrengthBar.style.width = strength + '%';
+            
+            // Update color based on strength
+            if (strength < 50) {
+                passwordStrengthBar.style.backgroundColor = '#ff3333';
+            } else if (strength < 75) {
+                passwordStrengthBar.style.backgroundColor = '#ff9900';
+            } else {
+                passwordStrengthBar.style.backgroundColor = '#00cc00';
+            }
+            
+            // Validate password
+            validatePassword();
+        });
+
+        // Confirm password validation
+        confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+
+        // Form validation functions
+        function validateField(fieldId, errorId, validator) {
+            const field = document.getElementById(fieldId);
+            const error = document.getElementById(errorId);
+            const value = field.value.trim();
+            
+            if (!validator(value)) {
+                field.style.borderColor = '#ff3333';
+                error.style.display = 'block';
+                return false;
+            } else {
+                field.style.borderColor = '';
+                error.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validatePassword() {
+            return validateField('password', 'password-error', (value) => {
+                return value.length >= 8;
+            });
+        }
+
+        function validateConfirmPassword() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const error = document.getElementById('confirm-password-error');
+            
+            if (password !== confirmPassword) {
+                confirmPasswordInput.style.borderColor = '#ff3333';
+                error.style.display = 'block';
+                return false;
+            } else {
+                confirmPasswordInput.style.borderColor = '';
+                error.style.display = 'none';
+                return true;
+            }
+        }
+
+        // ========== FORM SUBMISSION ==========
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate all fields
+            const isNomValid = validateField('nom', 'nom-error', (value) => value.length > 0);
+            const isPrenomValid = validateField('prenom', 'prenom-error', (value) => value.length > 0);
+            const isEmailValid = validateField('email', 'email-error', (value) => {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            });
+            const isNumeroValid = validateField('numero', 'numero-error', (value) => {
+                return /^[0-9\s\-+]{10,}$/.test(value.replace(/\s/g, ''));
+            });
+            const isPasswordValid = validatePassword();
+            const isConfirmPasswordValid = validateConfirmPassword();
+            const isTermsAccepted = document.getElementById('terms').checked;
+            
+            const termsError = document.getElementById('terms-error');
+            if (!isTermsAccepted) {
+                termsError.style.display = 'block';
+            } else {
+                termsError.style.display = 'none';
+            }
+            
+            // If all validations pass
+            if (isNomValid && isPrenomValid && isEmailValid && isNumeroValid && 
+                isPasswordValid && isConfirmPasswordValid && isTermsAccepted) {
+                
+                const submitBtn = this.querySelector('.btn');
+                const originalText = submitBtn.innerHTML;
+                
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> INSCRIPTION...';
+                submitBtn.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    // Show success state
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> INSCRIPTION RÉUSSIE!';
+                    submitBtn.style.background = 'linear-gradient(to right, #00cc00, #00ff00)';
+                    
+                    // Show success message
+                    const successMessage = document.getElementById('success-message');
+                    successMessage.style.display = 'block';
+                    
+                    // Simulate redirect to login
+                    setTimeout(() => {
+                        showNotification('Compte créé avec succès ! Redirection vers la connexion...');
+                        // window.location.href = 'login.html';
+                    }, 1500);
+                }, 2000);
+            } else {
+                showNotification('Veuillez corriger les erreurs dans le formulaire');
+            }
+        });
+
+        // ========== EFFETS VISUELS ==========
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+
+        // ========== FONCTION DE NOTIFICATION ==========
+        function showNotification(message) {
+            const existingNotifications = document.querySelectorAll('.custom-notification');
+            existingNotifications.forEach(notification => notification.remove());
+
+            const notification = document.createElement('div');
+            notification.className = 'custom-notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--yellow);
+                color: var(--black);
+                padding: 15px 25px;
+                border-radius: 10px;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 5px 15px rgba(255, 183, 3, 0.2);
+                font-weight: 500;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            if (!document.querySelector('#notification-animations')) {
+                const style = document.createElement('style');
+                style.id = 'notification-animations';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ========== GESTION DES LIENS ==========
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    showNotification('Fonctionnalité à venir !');
+                }
+            });
+        });
+
+        // ========== GOOGLE BUTTON ANIMATION ==========
+        const googleBtn = document.querySelector('.google-btn');
+        googleBtn.addEventListener('click', function() {
+            showNotification('Inscription avec Google à venir !');
+            
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+        });
+    </script>
+</body>
+</html>

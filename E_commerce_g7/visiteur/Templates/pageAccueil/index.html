@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>TechZone - Électronique Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Votre destination pour les appareils électroniques premium : smartphones, consoles, TV, WiFi et plus">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #000000;
+            --dark: #0b0b0b;
+            --yellow: #ffb703;
+            --yellow-dark: #e6a503;
+            --white: #ffffff;
+            --gray: #bdbdbd;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --card-bg: #1a1a1a;
+        }
+
+        /* Mode clair - Thème blanc */
+        body.light-mode {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        body.light-mode header {
+            background: var(--white);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .logo {
+            color: var(--black);
+        }
+
+        body.light-mode nav a {
+            color: var(--black);
+        }
+
+        body.light-mode nav a:hover,
+        body.light-mode nav a.active {
+            color: var(--yellow);
+        }
+
+        body.light-mode .actions i {
+            color: var(--black);
+        }
+
+        body.light-mode .sign-in {
+            border-color: var(--black);
+            color: var(--black);
+        }
+
+        body.light-mode .sign-in:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        body.light-mode .featured-products,
+        body.light-mode .testimonials,
+        body.light-mode footer {
+            background: #f8f9fa;
+        }
+
+        body.light-mode .product-card,
+        body.light-mode .testimonial-card {
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .product-info h3,
+        body.light-mode .testimonial-text h4,
+        body.light-mode .section-header h2,
+        body.light-mode .newsletter h2,
+        body.light-mode .footer-column h3 {
+            color: var(--black);
+        }
+
+        body.light-mode .product-info p,
+        body.light-mode .testimonial-card p,
+        body.light-mode .section-header p,
+        body.light-mode .newsletter p,
+        body.light-mode .footer-column ul li a,
+        body.light-mode .footer-bottom {
+            color: #666;
+        }
+
+        body.light-mode .categories {
+            background: var(--white);
+        }
+
+        body.light-mode .newsletter {
+            background: #f8f9fa;
+        }
+
+        body.light-mode .social-links a {
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .mobile-menu-btn {
+            color: var(--black);
+        }
+
+        /* Bouton thème */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            color: var(--white);
+        }
+
+        body.light-mode .theme-toggle {
+            color: var(--black);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 183, 3, 0.1);
+            transform: rotate(30deg);
+        }
+
+        .theme-toggle i.fa-sun {
+            display: none;
+        }
+
+        body.light-mode .theme-toggle i.fa-moon {
+            display: none;
+        }
+
+        body.light-mode .theme-toggle i.fa-sun {
+            display: block;
+        }
+
+        .img-large{
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: floatImage 6s ease-in-out infinite;
+            transform-origin: center center;
+        }
+
+        @keyframes floatImage {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(0) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(-1deg);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ================= NAVBAR ================= */
+        header {
+            padding: 25px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--black);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.5s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+            gap: 10px;
+            color: var(--white);
+            transition: color 0.5s ease;
+        }
+
+        .logo i {
+            color: var(--yellow);
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--yellow);
+        }
+
+        nav a.active {
+            color: var(--yellow);
+        }
+
+        nav a.active::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--yellow);
+            bottom: -8px;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .actions i {
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .actions i:hover {
+            color: var(--yellow);
+        }
+
+        .sign-in {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sign-in:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* ================= HERO ================= */
+        .hero {
+            display: flex;
+            padding: 60px 80px;
+            position: relative;
+            min-height: 85vh;
+            align-items: center;
+        }
+
+        .hero-text {
+            width: 50%;
+            padding-right: 40px;
+        }
+
+        .hero-text h1 {
+            font-size: 56px;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .hero-text h1 span {
+            color: var(--yellow);
+        }
+
+        .hero-text p {
+            color: var(--gray);
+            max-width: 450px;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            background: var(--yellow);
+            color: var(--black);
+            border: none;
+            padding: 14px 35px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: var(--yellow-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 183, 3, 0.3);
+        }
+
+        /* ================= HERO IMAGE ================= */
+        .hero-image {
+            width: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image::before {
+            content: "";
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(255, 183, 3, 0.2), rgba(255, 143, 0, 0.1));
+            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+            z-index: 0;
+            animation: pulseBackground 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseBackground {
+            0%, 100% {
+                opacity: 0.7;
+                transform: translateY(-50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1.05);
+            }
+        }
+
+        /* ================= GALLERY ================= */
+        .gallery {
+            margin-top: 60px;
+        }
+
+        .gallery h3 {
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        .gallery-items {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .gallery-items img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .gallery-items img:hover {
+            transform: translateY(-5px);
+            border-color: var(--yellow);
+        }
+
+        .gallery-items i {
+            font-size: 20px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .gallery-items i:hover {
+            color: var(--yellow);
+        }
+
+        /* ================= FEATURED PRODUCTS ================= */
+        .featured-products {
+            padding: 100px 80px;
+            background: var(--dark);
+            transition: background-color 0.5s ease;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--white);
+            transition: color 0.5s ease;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f0f0f;
+        }
+
+        .product-image img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--white);
+            transition: color 0.5s ease;
+        }
+
+        .product-info p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price span {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--yellow);
+        }
+
+        .add-to-cart {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--yellow);
+            border: none;
+            color: var(--black);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: var(--yellow-dark);
+            transform: rotate(15deg);
+        }
+
+        /* Badge Nouveauté */
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--yellow);
+            color: var(--black);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        /* ================= CATEGORIES ================= */
+        .categories {
+            padding: 100px 80px;
+            background: var(--black);
+            transition: background-color 0.5s ease;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .category-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 250px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: scale(1.03);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 30px 20px 20px;
+            color: var(--white);
+        }
+
+        .category-overlay h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .category-overlay p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ================= TESTIMONIALS ================= */
+        .testimonials {
+            padding: 100px 80px;
+            background: var(--dark);
+            transition: background-color 0.5s ease;
+        }
+
+        .testimonials-slider {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: none;
+        }
+
+        .testimonials-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .testimonial-card {
+            min-width: 350px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .testimonial-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-content img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .testimonial-text h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--white);
+            transition: color 0.5s ease;
+        }
+
+        .testimonial-text span {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .stars {
+            color: var(--yellow);
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* ================= NEWSLETTER ================= */
+        .newsletter {
+            padding: 80px;
+            background: var(--black);
+            text-align: center;
+            transition: background-color 0.5s ease;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--white);
+            transition: color 0.5s ease;
+        }
+
+        .newsletter p {
+            color: var(--gray);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            background: transparent;
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        body.light-mode .newsletter-form input {
+            border-color: rgba(0, 0, 0, 0.1);
+            color: var(--black);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--yellow);
+        }
+
+        .newsletter-form button {
+            padding: 15px 30px;
+            border-radius: 25px;
+            background: var(--yellow);
+            color: var(--black);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--yellow-dark);
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            background: var(--dark);
+            padding: 60px 80px 30px;
+            transition: background-color 0.5s ease;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--white);
+            transition: color 0.5s ease;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--yellow);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .social-links a {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .social-links a:hover {
+            background: var(--yellow);
+            color: var(--black);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        body.light-mode .footer-bottom {
+            border-top-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* ================= SLIDER DOTS ================= */
+        .dots {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .dot {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .dot.active {
+            background: var(--yellow);
+            transform: scale(1.2);
+        }
+
+        .dot:hover {
+            background: var(--yellow);
+        }
+
+        /* ================= MOBILE MENU ================= */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            transition: color 0.5s ease;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 1024px) {
+            header, .hero, .featured-products, .categories, .testimonials, .newsletter, footer {
+                padding: 40px;
+            }
+
+            .hero-text h1 {
+                font-size: 48px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            body.light-mode nav {
+                background: var(--white);
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                flex-direction: column;
+                padding: 40px 20px;
+                text-align: center;
+            }
+
+            .hero-text, .hero-image {
+                width: 100%;
+                padding: 0;
+            }
+
+            .hero-text {
+                margin-bottom: 40px;
+            }
+
+            .hero-image::before {
+                display: none;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .dots {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+            }
+
+            .testimonial-card {
+                min-width: 280px;
+            }
+        }
+
+        /* ================= ANIMATIONS ================= */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <i class="fa-solid fa-microchip"></i> TechZone
+    </div>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav id="mainNav">
+        <a href="#" class="active">Accueil</a>
+        <a href="#products">Produits</a>
+        <a href="#categories">Catégories</a>
+        <a href="#testimonials">Avis</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+        </button>
+        <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
+        <i class="fa-solid fa-heart"></i>
+        <i class="fa-solid fa-cart-shopping"></i>
+        <div class="cart-count">3</div>
+        <a href="{% url 'loginUser' %}" class="sign-in" style="text-decoration:none;">Connexion</a>    </div>
+</header>
+
+<section class="hero fade-in">
+    <div class="hero-text">
+        <h1>
+            La Technologie<br>
+            à Portée de <span>Main</span><br>
+            <span>Premium</span>
+        </h1>
+
+        <p>
+            Découvrez notre sélection d'appareils électroniques haut de gamme. Smartphones, consoles de jeux, téléviseurs 4K/8K, modems WiFi dernière génération et bien plus encore. Livraison rapide et garantie incluse.
+        </p>
+
+        <button class="btn">
+            Découvrir <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <div class="gallery">
+            <h3>Nouveautés Technologiques</h3>
+            <div class="gallery-items">
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=200&fit=crop" alt="Smartphones">
+                <img src="https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=300&h=200&fit=crop" alt="Consoles">
+                <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300&h=200&fit=crop" alt="TV 4K">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=500&h=600&fit=crop" alt="Électronique moderne" class="img-large">
+    </div>
+
+    <div class="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+</section>
+<section class="featured-products" id="products">
+    <div class="container">
+        <div class="section-header">
+            <h2>Produits Électroniques en Vedette</h2>
+            <p>Découvrez notre sélection d'appareils électroniques premium</p>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card fade-in">
+                <div class="product-badge">Nouveauté</div>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop" alt="iPhone 15 Pro">
+                </div>
+                <div class="product-info">
+                    <h3>iPhone 15 Pro Max</h3>
+                    <p>256 Go, Titanium, Appareil photo 48MP</p>
+                    <div class="price">
+                        <span>850.000 FCFA</span>
+                        <button class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card fade-in">
+                <div class="product-badge">Promotion</div>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=400&h=400&fit=crop" alt="PlayStation 5">
+                </div>
+                <div class="product-info">
+                    <h3>PlayStation 5</h3>
+                    <p>Édition Digital + 2 manettes DualSense</p>
+                    <div class="price">
+                        <span>450.000 FCFA</span>
+                        <button class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card fade-in">
+                <div class="product-badge">Écologique</div>
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=400&fit=crop" alt="TV Samsung 4K">
+                </div>
+                <div class="product-info">
+                    <h3>Samsung QLED 4K 65"</h3>
+                    <p>Smart TV avec Alexa intégrée</p>
+                    <div class="price">
+                        <span>650.000 FCFA</span>
+                        <button class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+            </div>
+        </div>
+
+        <!-- Bouton Voir plus centré -->
+        <div class="see-more-container">
+            <button class="sign-in">
+                Voir plus de produits
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="categories" id="categories">
+    <div class="container">
+        <div class="section-header">
+            <h2>Nos Catégories Électroniques</h2>
+            <p>Parcourez notre vaste collection de produits technologiques</p>
+        </div>
+
+        <div class="categories-grid">
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop" alt="Téléphones">
+                <div class="category-overlay">
+                    <h3>Téléphones</h3>
+                    <p>Smartphones & Accessoires</p>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=400&h=300&fit=crop" alt="Consoles">
+                <div class="category-overlay">
+                    <h3>Consoles de Jeu</h3>
+                    <p>PS5, Xbox, Nintendo Switch</p>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=300&fit=crop" alt="Téléviseurs">
+                <div class="category-overlay">
+                    <h3>Téléviseurs</h3>
+                    <p>4K, 8K, Smart TV, OLED</p>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1612852092658-fc1f0e9b5f43?w=400&h=300&fit=crop" alt="Réseau">
+                <div class="category-overlay">
+                    <h3>Réseau & WiFi</h3>
+                    <p>Modems, Routeurs, Accessoires</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+    <div class="container">
+        <div class="section-header">
+            <h2>Avis de Nos Clients</h2>
+            <p>Rejoignez des milliers de clients satisfaits à travers le monde</p>
+        </div>
+
+        <div class="testimonials-slider">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ahmed Diallo">
+                    <div class="testimonial-text">
+                        <h4>Ahmed Diallo</h4>
+                        <span>Développeur Web</span>
+                    </div>
+                </div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"Livraison rapide et produit conforme à la description. Mon iPhone 15 Pro est arrivé en parfait état avec tous les accessoires. Je recommande TechZone !"</p>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Fatoumata Sy">
+                    <div class="testimonial-text">
+                        <h4>Fatoumata Sy</h4>
+                        <span>Étudiante en Informatique</span>
+                    </div>
+                </div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p>"J'ai acheté ma PlayStation 5 ici et je suis ravie. Le service client est exceptionnel et m'a bien guidée dans mon choix. Prix compétitifs !"</p>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Oumar Ba">
+                    <div class="testimonial-text">
+                        <h4>Oumar Ba</h4>
+                        <span>Entrepreneur</span>
+                    </div>
+                </div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"Le modem WiFi 6 a complètement transformé mon réseau domestique. Installation facile et performance excellente. Excellent rapport qualité-prix."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="newsletter" id="contact">
+    <div class="container">
+        <div class="newsletter-content">
+            <h2>Restez Connecté</h2>
+            <p>Abonnez-vous à notre newsletter et soyez le premier à connaître les nouvelles sorties, offres exclusives et conseils technologiques.</p>
+
+            <div class="newsletter-form">
+                <input type="email" placeholder="Entrez votre adresse email">
+                <button type="submit">S'abonner</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>TechZone</h3>
+            <p>Votre destination pour les appareils électroniques premium. Nous nous engageons à vous offrir la meilleure expérience d'achat technologique.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>Produits</h3>
+            <ul>
+                <li><a href="#">Smartphones</a></li>
+                <li><a href="#">Consoles de Jeu</a></li>
+                <li><a href="#">Téléviseurs</a></li>
+                <li><a href="#">Modems WiFi</a></li>
+                <li><a href="#">Accessoires</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Service Client</h3>
+            <ul>
+                <li><a href="#">Contactez-nous</a></li>
+                <li><a href="#">Livraison & Retours</a></li>
+                <li><a href="#">Garantie Produits</a></li>
+                <li><a href="#">Guide d'Installation</a></li>
+                <li><a href="#">FAQ Technique</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Coordonnées</h3>
+            <ul>
+                <li><i class="fas fa-map-marker-alt"></i> Avenue Technologique, Dakar</li>
+                <li><i class="fas fa-phone"></i> +221 33 123 45 67</li>
+                <li><i class="fas fa-envelope"></i> contact@techzone.sn</li>
+                <li><i class="fas fa-clock"></i> Lun-Sam: 8h-20h</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 TechZone. Tous droits réservés. | Paiements sécurisés | Livraison dans toute l'Afrique de l'Ouest</p>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mainNav.classList.toggle('active');
+        mobileMenuBtn.innerHTML = mainNav.classList.contains('active')
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+    });
+
+    // Gestion du thème clair/sombre
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Vérifier le thème sauvegardé dans localStorage
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        body.classList.add('light-mode');
+    }
+
+    // Fonction pour basculer le thème
+    function toggleTheme() {
+        body.classList.toggle('light-mode');
+
+        // Sauvegarder la préférence
+        const isLightMode = body.classList.contains('light-mode');
+        localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+
+        // Notification
+        showNotification(isLightMode ? 'Mode clair activé' : 'Mode sombre activé');
+    }
+
+    // Événement du bouton thème
+    themeToggle.addEventListener('click', toggleTheme);
+
+    // Add to Cart Animation
+    const addToCartBtns = document.querySelectorAll('.add-to-cart');
+    const cartCount = document.querySelector('.cart-count');
+
+    addToCartBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Animation
+            btn.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+            }, 200);
+
+            // Update cart count
+            let currentCount = parseInt(cartCount.textContent);
+            cartCount.textContent = currentCount + 1;
+            localStorage.setItem('cartCount', currentCount + 1);
+
+            // Show notification
+            showNotification('Produit ajouté au panier !');
+        });
+    });
+
+    // Dot Navigation
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            dots.forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+        });
+    });
+
+    // Search Functionality
+    const searchBtn = document.getElementById('searchBtn');
+    searchBtn.addEventListener('click', () => {
+        const searchTerm = prompt('Que recherchez-vous ? (ex: iPhone, PS5, TV 4K...)');
+        if (searchTerm) {
+            showNotification(`Recherche de : ${searchTerm}`);
+        }
+    });
+
+    // Notification Function
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--yellow);
+            color: var(--black);
+            padding: 15px 25px;
+            border-radius: 10px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    // Add animation CSS
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+
+                // Close mobile menu if open
+                if (mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            }
+        });
+    });
+
+    // Scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements for animation
+    document.querySelectorAll('.product-card, .category-card, .testimonial-card').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Initialize cart count from localStorage or default
+    if (!localStorage.getItem('cartCount')) {
+        localStorage.setItem('cartCount', '3');
+    }
+    cartCount.textContent = localStorage.getItem('cartCount');
+
+    // Image hover effect enhancement
+    const heroImage = document.querySelector('.img-large');
+    if (heroImage) {
+        heroImage.addEventListener('mouseenter', () => {
+            heroImage.style.animation = 'floatImage 3s ease-in-out infinite';
+        });
+
+        heroImage.addEventListener('mouseleave', () => {
+            heroImage.style.animation = 'floatImage 6s ease-in-out infinite';
+        });
+    }
+</script>
+
+</body>
+</html>
