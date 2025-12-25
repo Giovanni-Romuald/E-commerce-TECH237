@@ -20,5 +20,5 @@ from .import views
 
 urlpatterns = [
     path('authentification/login-user/$+r',views.pageLoginUser,name="loginUser"),
-    path('authentification/Inscription-user', views.pageIncription,name="signUp")
+    path('authentification/Inscription-user', views.pageInscription,name="signUp")
 ]

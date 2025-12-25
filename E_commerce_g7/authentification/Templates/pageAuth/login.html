@@ -628,21 +628,28 @@
             <h2>Bienvenue !</h2>
             <div class="welcome-text">Accédez à votre compte</div>
             <p class="subtitle">Connectez-vous pour gérer vos commandes et bénéficier d'offres exclusives</p>
-
-            <form id="loginForm">
+            
+            <form id="loginForm" method="POST" action="{% url 'loginUser' %}">
+                {% csrf_token %}
                 <div class="form-group">
-                    <label>Adresse Email</label>
-                    <input type="email" placeholder="exemple@email.com" required>
+                    <label for="email">Adresse Email</label>
+                    <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Mot de passe</label>
-                    <input type="password" placeholder="••••••••" required>
+                    <label for="password">Mot de passe</label>
+                    <div style="position: relative;">
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('password')" 
+                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray); cursor: pointer; font-size: 14px;">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-options">
                     <div class="remember">
-                        <input type="checkbox" id="remember">
+                        <input type="checkbox" id="remember" name="remember">
                         <label for="remember">Se souvenir de moi</label>
                     </div>
                     <a href="#" style="color: var(--yellow); text-decoration: none; font-size: 13px;">Mot de passe oublié</a>
@@ -652,8 +659,14 @@
                     <i class="fas fa-sign-in-alt"></i> SE CONNECTER
                 </button>
 
+                <div class="divider">Ou connectez-vous avec</div>
+
+                <button type="button" class="google-btn">
+                    <i class="fab fa-google"></i> Google
+                </button>
+
                 <p class="create-account">
-                    Nouveau chez TechZone ? <a href="{% url 'signUp' %}">Créer un compte</a>
+                    Nouveau chez TechZone ? <a href="#">Créer un compte</a>
                 </p>
             </form>
         </div>
@@ -677,9 +690,6 @@
             // Sauvegarder la préférence
             const isLightMode = body.classList.contains('light-mode');
             localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
-
-            // Notification
-            showNotification(isLightMode ? 'Mode clair activé' : 'Mode sombre activé');
         }
 
         // Événement du bouton thème
@@ -688,50 +698,100 @@
         // ========== CAROUSEL FUNCTIONALITY ==========
         const images = document.querySelectorAll('.carousel-image');
         const dots = document.querySelectorAll('.carousel-dot');
-        let index = 0;
+        let currentIndex = 0;
+        let autoSlideInterval;
 
-        function show(i) {
+        function showImage(index) {
+            // S'assurer que l'index est dans les limites
+            if (index < 0) index = images.length - 1;
+            if (index >= images.length) index = 0;
+            
+            // Mettre à jour l'affichage
             images.forEach(img => img.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
-            images[i].classList.add('active');
-            dots[i].classList.add('active');
-            index = i;
+            images[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentIndex = index;
+        }
+
+        function nextImage() {
+            showImage((currentIndex + 1) % images.length);
+        }
+
+        function prevImage() {
+            showImage((currentIndex - 1 + images.length) % images.length);
         }
 
         // Button Events
-        document.getElementById('nextBtn').onclick = () => show((index + 1) % images.length);
-        document.getElementById('prevBtn').onclick = () => show((index - 1 + images.length) % images.length);
+        document.getElementById('nextBtn').onclick = nextImage;
+        document.getElementById('prevBtn').onclick = prevImage;
 
         // Dot Events
         dots.forEach(dot => {
-            dot.onclick = () => show(parseInt(dot.dataset.index));
+            dot.onclick = () => showImage(parseInt(dot.dataset.index));
         });
 
-        // Auto-slide
-        setInterval(() => show((index + 1) % images.length), 5000);
+        // Auto-slide avec reset de l'intervalle
+        function startAutoSlide() {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(nextImage, 5000);
+        }
+
+        // Redémarrer l'auto-slide quand l'utilisateur interagit
+        function resetAutoSlide() {
+            startAutoSlide();
+        }
+
+        startAutoSlide();
 
         // ========== FORM SUBMISSION ==========
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simulation de connexion réussie
+            // Récupération des valeurs
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
             const submitBtn = this.querySelector('.btn');
             const originalText = submitBtn.innerHTML;
             
+            // Validation basique
+            if (!email || !password) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                alert('Veuillez entrer une adresse email valide');
+                return;
+            }
+            
+            // Mise à jour de l'interface pendant le traitement
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> CONNEXION...';
             submitBtn.disabled = true;
+ 
+
+        // ========== FONCTION DE VALIDATION EMAIL ==========
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // ========== TOGGLE PASSWORD VISIBILITY ==========
+        function togglePassword(passwordId) {
+            const passwordInput = document.getElementById(passwordId);
+            const toggleButton = passwordInput.nextElementSibling;
+            const icon = toggleButton.querySelector('i');
             
-            setTimeout(() => {
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> CONNECTÉ!';
-                submitBtn.style.background = 'linear-gradient(to right, #00cc00, #00ff00)';
-                
-                // Redirection simulée vers la page d'accueil
-                setTimeout(() => {
-                    showNotification('Connexion réussie ! Redirection en cours...');
-                    // window.location.href = 'index.html';
-                }, 1000);
-            }, 1500);
-        });
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
 
         // ========== EFFETS VISUELS ==========
         document.querySelectorAll('input').forEach(input => {
@@ -744,74 +804,30 @@
             });
         });
 
-        // ========== FONCTION DE NOTIFICATION ==========
-        function showNotification(message) {
-            // Supprimer les notifications existantes
-            const existingNotifications = document.querySelectorAll('.custom-notification');
-            existingNotifications.forEach(notification => notification.remove());
-
-            const notification = document.createElement('div');
-            notification.className = 'custom-notification';
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--yellow);
-                color: var(--black);
-                padding: 15px 25px;
-                border-radius: 10px;
-                z-index: 10000;
-                animation: slideIn 0.3s ease;
-                box-shadow: 0 5px 15px rgba(255, 183, 3, 0.2);
-                font-weight: 500;
-                max-width: 300px;
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            // Ajouter les keyframes d'animation si elles n'existent pas
-            if (!document.querySelector('#notification-animations')) {
-                const style = document.createElement('style');
-                style.id = 'notification-animations';
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                    @keyframes slideOut {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
         // ========== GESTION DES LIENS ==========
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.getAttribute('href') === '#') {
                     e.preventDefault();
-                    showNotification('Fonctionnalité à venir !');
+                    alert('Fonctionnalité à venir !');
                 }
             });
         });
 
-        // ========== GOOGLE BUTTON ANIMATION ==========
-        const googleBtn = document.querySelector('.google-btn');
-        googleBtn.addEventListener('click', function() {
-            showNotification('Connexion avec Google à venir !');
+        // ========== GOOGLE BUTTON ==========
+        document.querySelector('.google-btn').addEventListener('click', function() {
+            alert('Connexion avec Google à venir !');
             
             // Effet visuel
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 this.style.transform = 'scale(1)';
             }, 200);
+        });
+
+        // ========== RESET AUTO-SLIDE ON INTERACTION ==========
+        document.querySelectorAll('.carousel-controls button, .carousel-dot').forEach(element => {
+            element.addEventListener('click', resetAutoSlide);
         });
     </script>
 </body>

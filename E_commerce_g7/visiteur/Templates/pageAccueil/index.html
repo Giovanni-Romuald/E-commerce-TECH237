@@ -1001,8 +1001,29 @@
         <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
         <i class="fa-solid fa-heart"></i>
         <i class="fa-solid fa-cart-shopping"></i>
-        <div class="cart-count">3</div>
-        <a href="{% url 'loginUser' %}" class="sign-in" style="text-decoration:none;">Connexion</a>    </div>
+        <div class="cart-count"></div>
+        
+<div class="user-actions">
+    {% if user.is_authenticated %}
+        <!-- Si l'utilisateur est connecté -->
+        <a href="" class="sign-in" style="text-decoration:none;">
+            <i class="fas fa-user"></i> Mon compte
+        </a>
+        <!-- Optionnel : lien de déconnexion -->
+        <a href="" class="sign-in" style="text-decoration:none; margin-left:10px;">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </a>
+    {% else %}
+        <!-- Si l'utilisateur n'est pas connecté -->
+        <a href="{% url 'loginUser' %}" class="sign-in" style="text-decoration:none;">
+            <i class="fas fa-sign-in-alt"></i> Connexion
+        </a>
+        <!-- Optionnel : lien d'inscription -->
+        <a href="{% url 'register' %}" class="sign-up" style="text-decoration:none; margin-left:10px;">
+            <i class="fas fa-user-plus"></i> Inscription
+        </a>
+    {% endif %}
+</div>
 </header>
 
 <section class="hero fade-in">
